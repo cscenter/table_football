@@ -1,8 +1,8 @@
-.DS_Store
-/.gradle
-/.idea
-/out
-/build
+*.DS_Store
+/kicker/.gradle
+/kicker/.idea
+/kicker/out
+/kicker/build
 *.iml
 *.ipr
 *.iws
