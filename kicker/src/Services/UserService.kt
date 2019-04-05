@@ -1,6 +1,6 @@
 package com.kicker.Services
 
-class PlayerService {
+class UserService {
     fun register() {
 
     }

@@ -1,21 +1,25 @@
 package com.kicker.Controllers
 
-import io.ktor.application.call
-import io.ktor.http.ContentType
-import io.ktor.response.respondText
+import com.kicker.Services.GameService
 import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 
-const val RATING_ENDPOINT = "/kiker/rating"
-class StatsController {
+
+const val GAME_START_ENDPOINT = "/game/start"
+const val GAME_END_ENDPOINT = "/game/end"
+const val STATS_ENDPOINT = "/game/stats"
+
+
+class GameController {
+    val gameService: GameService? = null
 
     fun startServer() {
         val server = embeddedServer(Netty, port = 8080) {
             routing {
-                get(RATING_ENDPOINT) {
-                    call.respondText("Hello World!", ContentType.Text.Plain)
+                get(GAME_START_ENDPOINT) {
+                    gameService?.create()
                 }
 
             }
@@ -23,5 +27,5 @@ class StatsController {
         server.start(wait = true)
     }
 
-    fun showHomepage() {}
+
 }
