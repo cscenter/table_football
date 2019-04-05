@@ -13,25 +13,23 @@ import org.litote.kmongo.newId
 import org.litote.kmongo.reactivestreams.KMongo
 import java.time.LocalDateTime
 
-data class User(val _id: Id<User>, val nickName: String)
-data class Team(val _id: Id<Team>, val name: String, val user1_id: Id<User>, val user2_id: Id<User>)
-data class Goal(val _id: Id<User>, val team: Id<Team>, val time: java.time.LocalDateTime)
-data class Match(val _id: Id<Match>, val team1_id: Id<Team>, val team2_id: Id<Team>
-                 , val start_time: java.time.LocalDateTime, val end_time: java.time.LocalDateTime?,
-                 val goals: Array<Goal>)
+
+const val ROOT_ENDPOINT = "/"
+const val DEMO_ENDPOINT = "/demo"
 
 fun main(args: Array<String>) {
-//    startServer()
+    startServer()
     fillDatabase()
 }
+
 
 fun startServer() {
     val server = embeddedServer(Netty, port = 8080) {
         routing {
-            get("/") {
+            get(ROOT_ENDPOINT) {
                 call.respondText("Hello World!", ContentType.Text.Plain)
             }
-            get("/demo") {
+            get(DEMO_ENDPOINT) {
                 call.respondText("HELLO WORLD!")
             }
         }
@@ -71,8 +69,10 @@ fun fillDatabase() {
         val goal3 = Goal(newId(), teamGoodGuys._id, LocalDateTime.now())
         val goal4 = Goal(newId(), teamDefenders._id, LocalDateTime.now())
         val goal5 = Goal(newId(), teamGoodGuys._id, LocalDateTime.now())
-        val match = Match(newId(), teamDefenders._id, teamGoodGuys._id, LocalDateTime.now(), null
-            , arrayOf(goal1, goal2, goal3, goal4, goal5))
+        val match = Match(
+            newId(), teamDefenders._id, teamGoodGuys._id, LocalDateTime.now(), null
+            , arrayOf(goal1, goal2, goal3, goal4, goal5)
+        )
         match_col.insertOne(match)
     }
 }
