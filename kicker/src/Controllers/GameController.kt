@@ -17,18 +17,6 @@ const val STATS_ENDPOINT = "/game/stats"
 
 class GameController {
     val gameService: GameService? = null
-
-    fun startServer() {
-        val server = embeddedServer(Netty, port = 8080) {
-            routing {
-                get(GAME_START_ENDPOINT) {
-                    gameService?.create()
-                }
-
-            }
-        }
-        server.start(wait = true)
-    }
 }
 
 fun Route.gameController() {
