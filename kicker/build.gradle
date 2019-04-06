@@ -36,6 +36,7 @@ dependencies {
     compile "io.ktor:ktor-server-host-common:$ktor_version"
     compile "io.ktor:ktor-websockets:$ktor_version"
     compile "io.ktor:ktor-jackson:$ktor_version"
+    compile "io.ktor:ktor-freemarker:$ktor_version"
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
     compile 'org.litote.kmongo:kmongo-coroutine:3.10.0'
 }
