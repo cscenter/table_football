@@ -1,21 +1,16 @@
 package com.kicker
 
+import com.kicker.Controllers.gameController
+import com.kicker.Controllers.statsController
+import com.kicker.Controllers.userController
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import kotlinx.coroutines.runBlocking
-import org.litote.kmongo.Id
 import org.litote.kmongo.coroutine.coroutine
-import org.litote.kmongo.newId
 import org.litote.kmongo.reactivestreams.KMongo
-import java.time.LocalDateTime
-
-
-const val ROOT_ENDPOINT = "/"
-const val DEMO_ENDPOINT = "/demo"
 
 fun main(args: Array<String>) {
     startServer()
@@ -26,13 +21,11 @@ fun main(args: Array<String>) {
 fun startServer() {
     val server = embeddedServer(Netty, port = 8080) {
         routing {
-            get(ROOT_ENDPOINT) {
-                call.respondText("Hello World!", ContentType.Text.Plain)
-            }
-            get(DEMO_ENDPOINT) {
-                call.respondText("HELLO WORLD!")
-            }
+            gameController()
+            userController()
+            statsController()
         }
+
     }
     server.start(wait = true)
 }

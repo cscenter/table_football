@@ -1,6 +1,9 @@
 package com.kicker.Controllers
 
 import com.kicker.Services.GameService
+import io.ktor.application.call
+import io.ktor.response.respondText
+import io.ktor.routing.Route
 import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
@@ -26,6 +29,16 @@ class GameController {
         }
         server.start(wait = true)
     }
+}
 
-
+fun Route.gameController() {
+    get(GAME_START_ENDPOINT) {
+        call.respondText("start game")
+    }
+    get(GAME_END_ENDPOINT) {
+        call.respondText("end game")
+    }
+    get(STATS_ENDPOINT) {
+        call.respondText("game stats")
+    }
 }
