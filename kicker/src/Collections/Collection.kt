@@ -1,6 +1,6 @@
 package com.kicker.Collections
 
-import com.kicker.dbEnteties.Entity
+import com.kicker.Enteties.Entity
 
 interface Collection<T: Entity> {
 

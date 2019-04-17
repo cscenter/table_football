@@ -14,9 +14,6 @@ const val REGISTER_ENDPOINT = "/register"
 const val LOGIN_ENDPOINT = "/login"
 
 class UserController {
-    fun validCredentials(username: String?, password: String?): Boolean {
-        return username != null && username == password
-    }
 }
 
 fun Route.userController() {

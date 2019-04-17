@@ -1,6 +1,5 @@
 package com.kicker
 
-import com.kicker.Controllers.UserController
 import com.kicker.Controllers.gameController
 import com.kicker.Controllers.statsController
 import com.kicker.Controllers.userController
@@ -11,18 +10,16 @@ import io.ktor.response.respondRedirect
 import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import org.litote.kmongo.coroutine.coroutine
-import org.litote.kmongo.reactivestreams.KMongo
+import org.litote.kmongo.*
 
 
 fun main(args: Array<String>) {
 
-    startServer()
+    startServer(args)
     createDatabase()
 }
 
-
-fun startServer() {
+fun startServer(args: Array<String>) {
     val server = embeddedServer(Netty, port = 8080) {
         install(FreeMarker) {
             templateLoader = ClassTemplateLoader(this::class.java.classLoader, "templates")
@@ -40,7 +37,7 @@ fun startServer() {
     server.start(wait = true)
 }
 
-fun createDatabase(){
-    val client = KMongo.createClient().coroutine
+fun createDatabase() {
+    val client = KMongo.createClient()
     val database = client.getDatabase("test")
 }

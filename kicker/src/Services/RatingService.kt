@@ -1,17 +1,17 @@
 package com.kicker.Services
 
-import com.kicker.User
+import com.kicker.Enteties.User
 
 class RatingService {
     fun calcRating(userId: Int): Long {
-        return 0;
+        return 0
     }
 
     fun getRating(userId: Int): Long {
-        return 0;
+        return 0
     }
 
     fun getRatings(): Array<User>? {
-        return null;
+        return null
     }
 }

@@ -1,19 +1,16 @@
 package com.kicker.Collections
 
-import com.kicker.User
-import com.kicker.dbEnteties.Entity
-import kotlinx.coroutines.runBlocking
-import org.litote.kmongo.coroutine.CoroutineDatabase
-import org.litote.kmongo.newId
+import com.kicker.Enteties.User
+import com.mongodb.client.MongoDatabase
+import org.litote.kmongo.*
 
-class UserCollection: Collection<User> {
-    val database: CoroutineDatabase? = null
+class UserCollection : Collection<User> {
+
+    val database: MongoDatabase? = null
     val collection = database?.getCollection<User>()
 
     override fun add(record: User): User {
-        runBlocking {
-            collection?.insertOne(record)
-        }
+        collection?.insertOne(record)
         return record
     }
 
