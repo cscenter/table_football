@@ -2,29 +2,32 @@ package com.kicker.Collections
 
 
 import com.kicker.Enteties.Game
-import com.mongodb.client.MongoDatabase
 import org.litote.kmongo.*
 
 
 class GameCollection : Collection<Game> {
 
-    val database: MongoDatabase? = null
-    val collection = database?.getCollection<Game>()
-
-    override fun add(record: Game): Game {
-        collection?.insertOne(record)
-        return record
+    override fun add(record: Game): String? {
+        val client = KMongo.createClient()
+        val database = client.getDatabase("test")
+        val user_col = database.getCollection<Game>()
+        user_col.insertOne(record)
+        return record._id
     }
 
-    override fun getAll() {
+    override fun getAll(): List<Game> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun get(id: Int): Game {
+    override fun getById(id: String): Game? {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun remove(id: Int) {
+    override fun getByName(name: String): Game? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun remove(id: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

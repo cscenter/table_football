@@ -2,20 +2,21 @@ package com.kicker.Services
 
 import com.kicker.Collections.GameCollection
 import com.kicker.Enteties.Game
+import com.kicker.kodein
+import org.kodein.di.generic.instance
+import java.time.LocalDateTime
 
 
 class GameService {
-    val gameCollection: GameCollection? = null
+    private val gameCollection: GameCollection by kodein.instance()
 
-    fun create() {
-//        val game = Game()
-//        //how to get generated id
-//        gameCollection?.add(game)
-
+    fun create(): String? {
+        val game = Game(creationTime = LocalDateTime.now())
+        gameCollection.add(game)
+        return game._id
     }
 
     fun end(gameId: Int) {
-        val game = gameCollection?.get(gameId)
     }
 
     fun stats(gameId: Int) {}

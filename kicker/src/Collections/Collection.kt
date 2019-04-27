@@ -2,15 +2,17 @@ package com.kicker.Collections
 
 import com.kicker.Enteties.Entity
 
-interface Collection<T: Entity> {
+interface Collection<T: Entity>{
 
-    fun add(record: T): T
+    fun add(record: T): String?
 
-    fun getAll()
+    fun getAll(): List<T>
 
-    fun get(id: Int): T
+    fun getById(id: String): T?
 
-    fun remove(id: Int)
+    fun getByName(name: String): T?
+
+    fun remove(id: String)
 
     fun clear()
 }
