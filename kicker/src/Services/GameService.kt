@@ -16,8 +16,20 @@ class GameService {
         return game._id
     }
 
-    fun end(gameId: Int) {
+    fun end(gameId: String) {
+        gameCollection.updateEndTimeById(gameId, LocalDateTime.now())
+
     }
 
-    fun stats(gameId: Int) {}
+    fun start(gameId: String) {
+        gameCollection.updateStartTimeById(gameId, LocalDateTime.now())
+    }
+
+    fun addUserToRedTeam(userName: String, gameId: String) {
+        gameCollection.addUserToRed(userName, gameId)
+    }
+
+    fun addUserToBlueTeam(userName: String, gameId: String) {
+        gameCollection.addUserToBlue(userName, gameId)
+    }
 }

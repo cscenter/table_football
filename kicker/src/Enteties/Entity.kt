@@ -1,4 +1,5 @@
 package com.kicker.Enteties
 
-interface Entity {
+abstract class Entity() {
+    val _id: String? = null
 }

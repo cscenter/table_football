@@ -2,6 +2,7 @@ package com.kicker.Controllers
 
 import com.kicker.Collections.UserCollection
 import com.kicker.Enteties.User
+import com.kicker.Enteties.Users
 import com.kicker.kodein
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
@@ -38,8 +39,7 @@ fun Route.userController() {
 
     get(ALL_USERS) {
         val users = userController.getAllUsers()
-        val names = users.map { x -> x.nickName }
-        call.respondText(names.joinToString(separator = "\n"))
+        call.respond(FreeMarkerContent("allUsers.ftl", mapOf("data" to Users(users)), ""))
     }
 }
 

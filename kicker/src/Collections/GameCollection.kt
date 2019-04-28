@@ -2,36 +2,46 @@ package com.kicker.Collections
 
 
 import com.kicker.Enteties.Game
+import com.kicker.kodein
+import com.mongodb.client.MongoDatabase
+import org.kodein.di.generic.instance
 import org.litote.kmongo.*
+import java.time.LocalDateTime
 
 
-class GameCollection : Collection<Game> {
+class GameCollection : Collection<Game>() {
+    private val database: MongoDatabase by kodein.instance()
+    override val collection = database.getCollection<Game>()
 
-    override fun add(record: Game): String? {
-        val client = KMongo.createClient()
-        val database = client.getDatabase("test")
-        val user_col = database.getCollection<Game>()
-        user_col.insertOne(record)
-        return record._id
+    fun updateEndTimeById(id: String, endTime: LocalDateTime) {
+        val game = getById(id)
+        if (game != null) {
+            game.endTime = endTime
+            collection.updateOne(Game::_id eq id, game)
+        }
     }
 
-    override fun getAll(): List<Game> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun updateStartTimeById(id: String, endTime: LocalDateTime) {
+        val game = getById(id)
+        if (game != null) {
+            game.startTime = endTime
+            collection.updateOne(Game::_id eq id, game)
+        }
     }
 
-    override fun getById(id: String): Game? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun addUserToRed(userName: String, gameId: String) {
+        val game = getById(gameId)
+        if (game != null) {
+            game.teamRed.add(userName)
+            collection.updateOne(Game::_id eq gameId, game)
+        }
     }
 
-    override fun getByName(name: String): Game? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun remove(id: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun clear() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun addUserToBlue(userName: String, gameId: String) {
+        val game = getById(gameId)
+        if (game != null) {
+            game.teamBlue.add(userName)
+            collection.updateOne(Game::_id eq gameId, game)
+        }
     }
 }

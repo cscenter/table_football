@@ -1,18 +1,28 @@
 package com.kicker.Collections
 
 import com.kicker.Enteties.Entity
+import com.mongodb.client.MongoCollection
+import org.litote.kmongo.*
 
-interface Collection<T: Entity>{
+abstract class Collection<T : Entity> {
 
-    fun add(record: T): String?
+    protected abstract val collection: MongoCollection<T>
+    fun add(record: T): String? {
+        collection.insertOne(record)
+        return record._id
+    }
 
-    fun getAll(): List<T>
+    fun getAll(): List<T> {
+        val games = mutableListOf<T>()
+        collection.find("{}").into(games)
+        return games
+    }
 
-    fun getById(id: String): T?
+    fun getById(id: String): T? {
+        return collection.findOne("{_id:'${id}'}")
+    }
 
-    fun getByName(name: String): T?
-
-    fun remove(id: String)
-
-    fun clear()
+    fun removeById(id: String) {
+        collection.deleteOne("{_id:'${id}'}")
+    }
 }
