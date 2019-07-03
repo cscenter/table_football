@@ -3,7 +3,7 @@
 <body>
 <ul>
     <#list data.items>
-    <table>
+    <table border="1px" cellspacing="0" cellpadding="1">
         <#items as game>
             <tr>
                     <td>Game ${game?counter}</td>

@@ -11,6 +11,9 @@ import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.FreeMarker
+import io.ktor.http.content.*
+import io.ktor.http.content.resources
+import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.*
 import io.ktor.server.engine.*
@@ -20,6 +23,7 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import org.litote.kmongo.*
+import java.io.File
 
 fun main(args: Array<String>) {
     startServer(args)
@@ -51,6 +55,14 @@ fun startServer(args: Array<String>) {
 
 
         routing {
+            static {
+                resource("/", "kicker-frontend/build/index.html")
+
+                route("/static") {
+                    resources("kicker-frontend/build/static")
+                }
+            }
+
             registerUser()
 
             install(Authentication) {
@@ -71,7 +83,7 @@ fun startServer(args: Array<String>) {
                 gameController()
                 userController()
                 statsController()
-                get("/") {
+                get("/api/") {
                     call.respondText { call.authentication.principal<UserIdPrincipal>()?.name!! }
                 }
 

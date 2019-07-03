@@ -16,12 +16,12 @@ import io.ktor.routing.get
 import org.kodein.di.generic.instance
 
 
-private const val GAME_START_ENDPOINT = "/startGame"
-private const val GAME_END_ENDPOINT = "/endGame"
-private const val GAME_CREATE_ENDPOINT = "/createGame"
-private const val ALL_GAMES = "/allGames"
-private const val JOIN_RED = "/joinRed"
-private const val JOIN_BLUE = "/joinBlue"
+private const val GAME_START_ENDPOINT = "/api/startGame"
+private const val GAME_END_ENDPOINT = "/api/endGame"
+private const val GAME_CREATE_ENDPOINT = "/api/createGame"
+private const val ALL_GAMES = "/api/allGames"
+private const val JOIN_RED = "/api/joinRed"
+private const val JOIN_BLUE = "/api/joinBlue"
 
 
 class GameController {

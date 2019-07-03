@@ -8,7 +8,7 @@ import io.ktor.routing.Route
 import io.ktor.routing.get
 import org.kodein.di.generic.instance
 
-private const val RATING_ENDPOINT = "/kiker/rating"
+private const val RATING_ENDPOINT = "/api/kiker/rating"
 
 class StatsController {
 

@@ -15,8 +15,8 @@ import io.ktor.routing.post
 import io.ktor.routing.route
 import org.kodein.di.generic.instance
 
-private const val REGISTER_ENDPOINT = "/register"
-private const val ALL_USERS = "/allusers"
+private const val REGISTER_ENDPOINT = "/api/register"
+private const val ALL_USERS = "/api/allusers"
 
 class UserController {
     val userCollection: UserCollection by kodein.instance()
