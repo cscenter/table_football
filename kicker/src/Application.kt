@@ -10,9 +10,12 @@ import com.mongodb.client.MongoDatabase
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.auth.*
+import io.ktor.features.ContentNegotiation
 import io.ktor.freemarker.FreeMarker
 import io.ktor.http.content.*
 import io.ktor.http.content.resources
+import io.ktor.jackson.jackson
+import io.ktor.response.header
 import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.*
@@ -53,41 +56,54 @@ fun startServer(args: Array<String>) {
 
         val userService: UserService by kodein.instance()
 
+//        routing {
+//            get("/snippets") {
+//                call.respond(mapOf("OK" to true))
+//            }
+//        }
 
         routing {
-            static {
-                resource("/", "kicker-frontend/build/index.html")
-
-                route("/static") {
-                    resources("kicker-frontend/build/static")
+            install(ContentNegotiation) {
+                jackson {
                 }
             }
-
-            registerUser()
-
-            install(Authentication) {
-                basic(name = "myauth1") {
-                    validate { credentials ->
-                        val principal = userService.authenticateUser(credentials.name, credentials.password)
-                        if (principal != null) {
-                            principal
-                        } else {
-                            null
-                        }
-                    }
-                }
-
+            get("/snippets") {
+                call.response.header("Access-Control-Allow-Origin", "*")
+                call.respond(mapOf("user" to "testUserName"))
             }
+//            static {
+//                resource("/", "kicker-frontend/build/index.html")
+//
+//                route("/static") {
+//                    resources("kicker-frontend/build/static")
+//                }
+//            }
 
-            authenticate("myauth1") {
-                gameController()
-                userController()
-                statsController()
-                get("/api/") {
-                    call.respondText { call.authentication.principal<UserIdPrincipal>()?.name!! }
-                }
+//            registerUser()
 
-            }
+//            install(Authentication) {
+//                basic(name = "myauth1") {
+//                    validate { credentials ->
+//                        val principal = userService.authenticateUser(credentials.name, credentials.password)
+//                        if (principal != null) {
+//                            principal
+//                        } else {
+//                            null
+//                        }
+//                    }
+//                }
+//
+//            }
+//
+//            authenticate("myauth1") {
+//                gameController()
+//                userController()
+//                statsController()
+//                get("/api/") {
+//                    call.respondText { call.authentication.principal<UserIdPrincipal>()?.name!! }
+//                }
+//
+//            }
         }
 
     }
