@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios'
+import axios from 'axios/index'
 
 function SnuffOutButton(props) {
     return (<button className="blue" onClick={props.onClick}>{props.text}</button>);

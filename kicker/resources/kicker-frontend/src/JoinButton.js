@@ -1,12 +1,32 @@
 import React from 'react';
 import './JoinButton.css';
 
-function JoinButton() {
-    return (
-        <div>
-            <button>Join</button>
-        </div>
-    );
+class JoinButton extends React.Component{
+    constructor(props) {
+        super(props);
+        this.joinTeam = this.joinTeam.bind(this);
+    }
+
+
+    joinTeam(){
+        this.props.onJoin()
+    }
+
+    render () {
+        if (this.props.players < 2) {
+            return (
+                <div>
+                    <button onClick={this.joinTeam} disabled={false}>Join Team</button>
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <button onClick={this.joinTeam} disabled={true}>Join Team</button>
+                </div>
+            );
+        }
+    }
 }
 
 export default JoinButton;

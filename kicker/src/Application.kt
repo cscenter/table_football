@@ -1,5 +1,6 @@
 package com.kicker
 
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.kicker.Collections.GameCollection
 import com.kicker.Collections.UserCollection
 import com.kicker.Controllers.*
@@ -53,31 +54,23 @@ fun startServer(args: Array<String>) {
         install(FreeMarker) {
             templateLoader = ClassTemplateLoader(this::class.java.classLoader, "templates")
         }
+        install(ContentNegotiation) {
+            jackson {
+                enable(SerializationFeature.INDENT_OUTPUT) // Pretty Prints the JSON
+            }
+        }
 
         val userService: UserService by kodein.instance()
 
-//        routing {
-//            get("/snippets") {
-//                call.respond(mapOf("OK" to true))
-//            }
-//        }
-
         routing {
-            install(ContentNegotiation) {
-                jackson {
-                }
-            }
+
             get("/snippets") {
                 call.response.header("Access-Control-Allow-Origin", "*")
                 call.respond(mapOf("user" to "testUserName"))
             }
-//            static {
-//                resource("/", "kicker-frontend/build/index.html")
-//
-//                route("/static") {
-//                    resources("kicker-frontend/build/static")
-//                }
-//            }
+            gameController()
+            userController()
+            statsController()
 
 //            registerUser()
 

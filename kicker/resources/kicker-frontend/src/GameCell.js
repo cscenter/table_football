@@ -6,14 +6,11 @@ import JoinButton from "./JoinButton";
 function GameCell() {
     return (
         <div className="GameCell">
-            <section className="GameCell-body">
-                <Team/>
-                <Team/>
-            </section>
-            <section className="GameCell-body">
-                <button>Join</button>
-                <button>Join</button>
-            </section>
+
+            <div className="GameCell-body">
+                <Team name="Team1"/>
+                <Team name="Team2"/>
+            </div>
             <footer className="GameCell-footer">
                 <button>Start Game</button>
             </footer>

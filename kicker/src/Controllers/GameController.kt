@@ -8,11 +8,12 @@ import com.kicker.kodein
 import io.ktor.application.call
 import io.ktor.auth.UserIdPrincipal
 import io.ktor.auth.authentication
-import io.ktor.freemarker.FreeMarkerContent
+import io.ktor.response.header
 import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.Route
 import io.ktor.routing.get
+import io.ktor.routing.post
 import org.kodein.di.generic.instance
 
 
@@ -27,8 +28,8 @@ private const val JOIN_BLUE = "/api/joinBlue"
 class GameController {
     val gameCollection: GameCollection by kodein.instance()
     fun getAllGames(): List<Game> {
-        val users = gameCollection.getAll()
-        return users
+        val games = gameCollection.getAll()
+        return games
     }
 }
 
@@ -37,16 +38,17 @@ fun Route.gameController() {
     val gameController: GameController by kodein.instance()
     get(ALL_GAMES) {
         val games = gameController.getAllGames()
-        call.respond(FreeMarkerContent("allGames.ftl", mapOf("data" to Games(games)), ""))
+        call.response.header("Access-Control-Allow-Origin", "*")
+        call.respond(mapOf("data" to Games(games)))
     }
 
-    get(GAME_CREATE_ENDPOINT) {
-        val gameIsCreated = gameService.create()
-        if (gameIsCreated != null) {
-            call.respondText("created game id: $gameIsCreated")
-        } else {
-            call.respondText("game not created")
+    post(GAME_CREATE_ENDPOINT) {
+        val gameId = gameService.create()
+        if (gameId != null) {
+            call.response.header("Access-Control-Allow-Origin", "*")
+            call.respond(mapOf("id" to gameId))
         }
+        throw RuntimeException("Unable to create game")
     }
 
     get(GAME_START_ENDPOINT) {
