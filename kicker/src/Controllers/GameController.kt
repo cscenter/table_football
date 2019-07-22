@@ -56,23 +56,25 @@ fun Route.gameController() {
         call.respondText("Game started")
     }
 
-    get(GAME_END_ENDPOINT) {
+    post(GAME_END_ENDPOINT) {
         gameService.end(call.request.queryParameters["_id"]!!)
         call.respondText("Game ended")
     }
 
-    get(JOIN_RED) {
-        val userName = call.authentication.principal<UserIdPrincipal>()?.name!!
-        val gameId = call.request.queryParameters["_id"]!!
+    post(JOIN_RED) {
+        call.response.header("Access-Control-Allow-Origin", "*")
+        val userName = call.request.queryParameters["userName"]!!
+        val gameId = call.request.queryParameters["gameId"]!!
         gameService.addUserToRedTeam(userName, gameId)
-        call.respondText(call.request.queryParameters["_id"]!!)
+        call.respond(mapOf("userName" to "test"))
     }
 
-    get(JOIN_BLUE) {
-        val userName = call.authentication.principal<UserIdPrincipal>()?.name!!
-        val gameId = call.request.queryParameters["_id"]!!
+    post(JOIN_BLUE) {
+        call.response.header("Access-Control-Allow-Origin", "*")
+        val userName = call.request.queryParameters["userName"]!!
+        val gameId = call.request.queryParameters["gameId"]!!
         gameService.addUserToBlueTeam(userName, gameId)
-        call.respondText(call.request.queryParameters["_id"]!!)
+        call.respond(mapOf("userName" to "test"))
     }
 }
 

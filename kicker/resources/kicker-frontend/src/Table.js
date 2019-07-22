@@ -20,6 +20,8 @@ class SimpleTable extends React.Component{
     constructor(props) {
         super(props);
         this.state = {value: 0, games: []};
+        this.joinRed = this.joinRed.bind(this);
+        this.joinBlue = this.joinBlue.bind(this);
     }
 
     componentDidMount() {
@@ -35,6 +37,29 @@ class SimpleTable extends React.Component{
 
     componentWillUnmount() {
         clearInterval(this.timerID);
+    }
+    joinRed(gameId) {
+        axios.post(`http://0.0.0.0:8080/api/joinBlue`
+            , {userName: this.props.login,
+                gameId: gameId},
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                }
+            })
+    }
+
+    joinBlue(gameId) {
+        axios.post(`http://0.0.0.0:8080/api/joinBlue`
+            , {userName: this.props.login,
+            gameId: gameId},
+            {
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+            }
+        })
     }
 
     render() {
@@ -60,12 +85,12 @@ class SimpleTable extends React.Component{
                                     {row.creationTime.dayOfMonth}
                                 </TableCell>
                                 <TableCell component="th" scope="row">
-                                    <Team players={row.teamRed} gameId={row._id}/>
+                                    <Team players={row.teamRed} gameId={row._id} onJoin={this.joinBlue}/>
                                 </TableCell>
                                 <TableCell component="th" scope="row">
-                                    <Team players={row.teamBlue}/>
+                                    <Team players={row.teamBlue} onJoin={this.joinRed}/>
                                 </TableCell>
-                                <TableCell component="th" scope="row">
+                                <TableCell component="th" scope="row" >
                                     3
                                 </TableCell>
                             </TableRow>

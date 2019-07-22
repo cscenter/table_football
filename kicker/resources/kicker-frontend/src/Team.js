@@ -2,18 +2,13 @@ import React from 'react';
 import './Team.css';
 import JoinButton from "./JoinButton";
 
+
 class Team extends React.Component {
     constructor(props) {
         super(props);
         this.state = {players: props.players, gameId: props.gameId};
-        this.onJoin = this.onJoin.bind(this);
     }
 
-    onJoin(){
-        // this.setState(prevState => ({
-        //     players: prevState.players + 1
-        // }))
-    }
     render () {
         let label1 = null;
         if(this.state.players && this.state.players[0]){
@@ -28,7 +23,7 @@ class Team extends React.Component {
                 <div className="Team-body">
                     {label1}
                     {label2}
-                    <JoinButton players={this.state.players} onJoin={this.onJoin}/>
+                    <JoinButton players={this.state.players} onJoin={this.props.onJoin}  gameId={this.state.gameId}/>
                 </div>
             </div>
         )

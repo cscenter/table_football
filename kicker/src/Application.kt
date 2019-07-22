@@ -71,32 +71,6 @@ fun startServer(args: Array<String>) {
             gameController()
             userController()
             statsController()
-
-//            registerUser()
-
-//            install(Authentication) {
-//                basic(name = "myauth1") {
-//                    validate { credentials ->
-//                        val principal = userService.authenticateUser(credentials.name, credentials.password)
-//                        if (principal != null) {
-//                            principal
-//                        } else {
-//                            null
-//                        }
-//                    }
-//                }
-//
-//            }
-//
-//            authenticate("myauth1") {
-//                gameController()
-//                userController()
-//                statsController()
-//                get("/api/") {
-//                    call.respondText { call.authentication.principal<UserIdPrincipal>()?.name!! }
-//                }
-//
-//            }
         }
 
     }

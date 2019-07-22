@@ -9,7 +9,7 @@ class JoinButton extends React.Component{
 
 
     joinTeam(){
-        this.props.onJoin()
+        this.props.onJoin(this.props.gameId)
     }
 
     render () {
